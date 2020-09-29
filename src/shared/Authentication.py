@@ -7,7 +7,7 @@ from functools import wraps
 from ..models.UserModel import UserModel
 
 
-class Auth():
+class Auth:
     """
     Auth Class
     """
@@ -28,7 +28,7 @@ class Auth():
                 os.getenv('JWT_SECRET_KEY'),
                 'HS256'
             ).decode("utf-8")
-        except Exception as e:
+        except Exception as error:
             return Response(
                 mimetype="application/json",
                 response=json.dumps({'error': 'error in generating user token'}),
@@ -45,7 +45,7 @@ class Auth():
             payload = jwt.decode(token, os.getenv('JWT_SECRET_KEY'))
             re['data'] = {'user_id': payload['sub']}
             return re
-        except jwt.ExpiredSignatureError as e1:
+        except jwt.ExpiredSignatureError as error:
             re['error'] = {'message': 'token expired, please login again'}
             return re
         except jwt.InvalidTokenError:

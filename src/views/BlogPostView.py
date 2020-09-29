@@ -26,7 +26,7 @@ def create():
 
     post = BlogPostModel(data)
     post.save()
-    data = blogpost_schema.dump(post).data
+    data = blogpost_schema.dump(post)
     return custom_response(data, 201)
 
 
