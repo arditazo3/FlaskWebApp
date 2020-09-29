@@ -5,6 +5,7 @@ from .models import db, bcrypt
 
 # import user_api blueprint
 from .views.UserView import user_api as user_blueprint
+from .views.BlogPostView import blogpost_api as blogpost_blueprint
 
 
 def create_app(env_name):
@@ -15,7 +16,6 @@ def create_app(env_name):
     # app initialization
     app = Flask(__name__)
 
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config.from_object(app_config[env_name])
 
     # initializing bcrypt
@@ -23,6 +23,7 @@ def create_app(env_name):
     db.init_app(app)
 
     app.register_blueprint(user_blueprint, url_prefix='/api/v1/users')
+    app.register_blueprint(blogpost_blueprint, url_prefix='/api/v1/blogposts')
 
     @app.route('/', methods=['GET'])
     def index():
